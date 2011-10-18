@@ -51,12 +51,11 @@ namespace WcfImageService
 
         public System.ServiceModel.Channels.Message GetImage()
         {
-            var files = Directory.GetFiles(@"C:\Users\Consultant4\Pictures", "*.jpg", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(System.Configuration.ConfigurationManager.AppSettings["ImagePath"], "*.jpg", SearchOption.AllDirectories);
             var rnd = new Random(DateTime.Now.Millisecond);
             var fnum = rnd.Next(files.Length);
             var filename = files[fnum];
             var f = File.OpenRead(filename);
-            //            var f = File.OpenRead(@"C:\Users\Consultant4\Pictures\2011-09-18 AnnetteLake\AnnetteLake 006.jpg");
             byte[] buffer = new byte[f.Length];
             f.Read(buffer, 0, (int)f.Length);
             var ms = new MemoryStream(buffer);
